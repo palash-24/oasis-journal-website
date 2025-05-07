@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Journaling | Oasis Journals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --soft-pink: #f9e3e0;
+            --warm-beige: #f5f0e1;
+            --dark-green: #3d5a40;
+            --gold: #d4a017;
+            --indigo: #4b0082;
+            --text-dark: #333;
+            --text-light: #777;
+        }
+
+        /* Animation Classes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-fade {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .animate-delay-1 { animation-delay: 0.2s; }
+        .animate-delay-2 { animation-delay: 0.4s; }
+        .animate-delay-3 { animation-delay: 0.6s; }
+
+        /* Blog Specific Styles */
+        .blog-hero {
+            background: linear-gradient(rgba(61, 90, 64, 0.8), rgba(61, 90, 64, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--warm-beige), transparent);
+            z-index: 1;
+        }
+
+        .blog-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .blog-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .blog-container {
+            background-color: var(--warm-beige);
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 3rem;
+        }
+
+        /* Blog Cards */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .blog-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .category-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--dark-green);
+            z-index: 2;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--indigo);
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta i {
+            color: var(--gold);
+        }
+
+        .excerpt {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark-green);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 30px;
+            background-color: rgba(61, 90, 64, 0.1);
+        }
+
+        .read-more:hover {
+            background-color: var(--dark-green);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .read-more i {
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Sidebar */
+        .blog-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-widget h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--indigo);
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .sidebar-widget h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        .search-form {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+        }
+
+        .search-form button {
+            background-color: var(--dark-green);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-form button:hover {
+            background-color: var(--indigo);
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        .categories-list a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .categories-list a:hover {
+            color: var(--dark-green);
+            padding-left: 10px;
+        }
+
+        .categories-list span {
+            background-color: var(--soft-pink);
+            color: var(--dark-green);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tags-cloud a {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--soft-pink);
+            color: var(--dark-green);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .tags-cloud a:hover {
+            background-color: var(--dark-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .sidebar-newsletter input {
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+        }
+
+        .sidebar-newsletter button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-newsletter button:hover {
+            background-color: var(--indigo);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 3rem;
+        }
+
+        .page-numbers {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .page-numbers:hover, .page-numbers.current {
+            background-color: var(--dark-green);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .page-numbers.prev, .page-numbers.next {
+            width: auto;
+            padding: 0 15px;
+            border-radius: 30px;
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .floating-1 {
+            top: 10%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            background-color: var(--gold);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            bottom: 15%;
+            right: 5%;
+            width: 150px;
+            height: 150px;
+            background-color: var(--dark-green);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .blog-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-sidebar {
+                position: static;
+                margin-top: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .blog-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">OASIS</a>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Mindful Journaling</h1>
+            <p>Discover the art of self-reflection with traditional Indian wisdom and modern techniques</p>
+            <a href="#https://www.snsociety.org/mindful-journaling/" class="btn primary pulse-animate">Explore Articles</a>
+        </div>
+        <div class="floating-element floating-1"></div>
+        <div class="floating-element floating-2"></div>
+    </section>
+
+    <!-- Main Blog Content -->
+    <main class="blog-container">
+        <div class="container">
+            <div class="blog-layout">
+                <!-- Blog Posts Grid -->
+                <div class="blog-posts" id="featured-posts">
+                    <!-- Blog Post 1 -->
+                    <article class="blog-card animate-fade">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Ancient Indian Journaling Techniques">
+                            <span class="category-tag">Heritage</span>
+                        </div>
+                        <div class="blog-content">
+                            <h2>10 Soothing Poems On Aging And Getting Older</h2>
+                            <div class="meta">
+                                <span><i class="fas fa-calendar-alt"></i> April 10, 2025</span>
+                                <span><i class="fas fa-clock"></i> 7 min read</span>
+                            </div>
+                            <p class="excerpt">Soothing Poems On golden Aging..</p>
+                            <a href="https://www.thegoodtrade.com/features/poems-about-aging/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card animate-fade animate-delay-1">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Bullet Journal in Hindi">
+                            <span class="category-tag">Productivity</span>
+                        </div>
+                        <div class="blog-content">
+                            <h2>Why I’m Writing Letters To My Future Self To Help Me Live In The Present</h2>
+                            <div class="meta">
+                                <span><i class="fas fa-calendar-alt"></i> March 16, 2025</span>
+                                <span><i class="fas fa-clock"></i> 9 min read</span>
+                            </div>
+                            <p class="excerpt">Hello, future Emily! I’m sure you are much more mature than I am now,” starts a journal entry from 2017, when I was deep into the existential .</p>
+                            <a href="https://www.thegoodtrade.com/features/letter-to-future-self/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 3 -->
+                    <article class="blog-card animate-fade animate-delay-2">
+                        <div class="blog-image">
+                            <img src=cute.jpg
+                            <span class="category-tag">Wellness</span>
+                        </div>
+                        <div class="blog-content">
+                            <h2>How Does Acceptance And Commitment Therapy (ACT) Work?</h2>
+                            <div class="meta">
+                                <span><i class="fas fa-calendar-alt"></i> April 21, 2025</span>
+                                <span><i class="fas fa-clock"></i> 15 min read</span>
+                            </div>
+                            <p class="excerpt">Acceptance & commitment therapy emphasizes accepting thoughts & feelings without judgment & commit to actions aligned with personal values....</p>
+                            <a href="https://positivepsychology.com/act-acceptance-and-commitment-therapy/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 4 -->
+                    <article class="blog-card animate-fade animate-delay-3">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1588&q=80" alt="Indian Festivals Journal">
+                            <span class="category-tag">Culture</span>
+                        </div>
+                        <div class="blog-content">
+                            <h2>Living in Sync: How Tracking My Cycle Transformed My Life</h2>
+                            <div class="meta">
+                                <span><i class="fas fa-calendar-alt"></i> october 02, 2024</span>
+                                <span><i class="fas fa-clock"></i> 2 min read</span>
+                            </div>
+                            <p class="excerpt">Beautiful ways to document your experiences during your light and dark moments, in your journal...</p>
+                            <a href="https://bulletjournal.com/blogs/bulletjournalist/living-in-sync-how-tracking-my-cycle-transformed-my-life" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                  
+                    <!-- Blog Post 5 -->
+                    <article class="blog-card animate-fade animate-delay-1">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" alt="Indian Women Journaling">
+                            <span class="category-tag">History</span>
+                        </div>
+                        <div class="blog-content">
+                            <h2>I Refuse to Be My Own Enemy: Why Forgiving Yourself Matters</h2>
+                            <div class="meta">
+                                <span><i class="fas fa-calendar-alt"></i> feb 08, 2025</span>
+                                <span><i class="fas fa-clock"></i> 12 min read</span>
+                            </div>
+                            <p class="excerpt">It’s strange but true that sometimes, the hardest person to forgive is the one staring back at us in the mirror....</p>
+                            <a href="https://feminisminindia.com/2018/03/08/history-women-writing-india/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="blog-sidebar">
+                    <div class="sidebar-widget">
+                        <h3>Search Articles</h3>
+                        <form class="search-form" id="blogSearchForm">
+                            <input type="text" placeholder="Search journaling topics..." id="blogSearchInput">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Popular Categories</h3>
+                        <ul class="categories-list">
+                            <li><a href="#" class="category-filter" data-category="ayurveda">Ayurvedic Journaling <span>(8)</span></a></li>
+                            <li><a href="#" class="category-filter" data-category="yoga">Yoga & Meditation <span>(12)</span></a></li>
+                            <li><a href="#" class="category-filter" data-category="heritage">Indian Heritage <span>(15)</span></a></li>
+                            <li><a href="#" class="category-filter" data-category="productivity">Productivity <span>(6)</span></a></li>
+                            <li><a href="#" class="category-filter" data-category="women">Women's Journals <span>(9)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Trending Tags</h3>
+                        <div class="tags-cloud">
+                            <a href="#" class="tag-filter" data-tag="diwali">#DiwaliJournal</a>
+                            <a href="#" class="tag-filter" data-tag="hindi">#HindiJournal</a>
+                            <a href="#" class="tag-filter" data-tag="ayurveda">#Ayurveda</a>
+                            <a href="#" class="tag-filter" data-tag="yogasutras">#YogaSutras</a>
+                            <a href="#" class="tag-filter" data-tag="bujo">#BujoIndia</a>
+                            <a href="#" class="tag-filter" data-tag="heritage">#IndianHeritage</a>
+                            <a href="#" class="tag-filter" data-tag="women">#WomenWriters</a>
+                            <a href="#" class="tag-filter" data-tag="tamil">#TamilJournal</a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget newsletter-widget">
+                        <h3>Get Free Journaling Prompts</h3>
+                        <p>Subscribe to receive our exclusive Indian-themed journaling ideas</p>
+                        <form class="sidebar-newsletter" id="sidebarNewsletter">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+                    
+                </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-numbers prev"><i class="fas fa-chevron-left"></i> Previous</a>
+                <a href="#" class="page-numbers">1</a>
+                <a href="#" class="page-numbers current">2</a>
+                <a href="#" class="page-numbers">3</a>
+                <a href="#" class="page-numbers next">Next <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Join Our Journaling Community</h2>
+            <p>Get weekly Indian-inspired journaling prompts and mindfulness tips</p>
+            <form class="newsletter-form" id="mainNewsletter">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn primary pulse-animate">Subscribe Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="shop.html">Shop Journals</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Indian Journaling</h3>
+                    <ul>
+                        <li><a href="#"> Journaling = Therapy</a></li>
+                        <li><a href="#">self care </a></li>
+                        <li><a href="#">inner Language </a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/oasis_journals" target="_blank">
+                            <i class="fab fa-instagram"></i> Instagram
+                        <a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Oasis Journals. Celebrating Indian Journaling Traditions.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // Scroll animations
+            const animateOnScroll = () => {
+                const blogCards = document.querySelectorAll('.blog-card');
+                blogCards.forEach(card => {
+                    const cardPosition = card.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (cardPosition < screenPosition) {
+                        card.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initialize
+
+            // Form submissions
+            const forms = ['blogSearchForm', 'sidebarNewsletter', 'mainNewsletter'];
+            forms.forEach(formId => {
+                const form = document.getElementById(formId);
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        alert('Thank you for your submission! We will contact you soon.');
+                        this.reset();
+                    });
+                }
+            });
+
+            // Category and tag filtering
+            const filterElements = document.querySelectorAll('.category-filter, .tag-filter');
+            filterElements.forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const filterType = this.classList.contains('category-filter') ? 'category' : 'tag';
+                    const filterValue = this.getAttribute(`data-${filterType}`);
+                    
+                    // Show loading state
+                    const blogPosts = document.querySelector('.blog-posts');
+                    blogPosts.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading articles...</div>';
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        alert(`Filtering by ${filterType}: ${filterValue}\n\nIn a complete implementation, this would load relevant articles from your database.`);
+                        // Here you would normally fetch and display filtered content
+                        blogPosts.innerHTML = '<p class="no-results">No articles found for this filter. <a href="#" class="reset-filter">Show all articles</a></p>';
+                    }, 800);
+                });
+            });
+
+            // Pagination
+            const pageLinks = document.querySelectorAll('.page-numbers');
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!this.classList.contains('current')) {
+                        e.preventDefault();
+                        const pageNum = this.textContent.trim();
+                        
+                        // Show loading state
+                        const blogPosts = document.querySelector('.blog-posts');
+                        blogPosts.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading page ' + pageNum + '...</div>';
+                        
+                        // Simulate page load
+                        setTimeout(() => {
+                            alert(`Loading page ${pageNum}\n\nIn a complete implementation, this would load the requested page from your server.`);
+                            // Here you would normally fetch and display the new page content
+                        }, 800);
+                    }
+                });
+            });
+
+            // Pulse animation for CTA buttons
+            const pulseElements = document.querySelectorAll('.pulse-animate');
+            pulseElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    element.style.animation = 'pulse 1.5s infinite';
+                });
+                element.addEventListener('mouseleave', () => {
+                    element.style.animation = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

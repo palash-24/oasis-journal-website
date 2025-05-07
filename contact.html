@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Oasis Journals</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=GFS+Didot&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">OASIS</a>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="#" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you! Reach out with questions, feedback, or just to say hello.</p>
+        </div>
+    </section>
+
+    <!-- Main Contact Content -->
+    <main class="contact-container">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send Us a Message</h2>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject">
+                                <option value="general">General Inquiry</option>
+                                <option value="order">Order Question</option>
+                                <option value="feedback">Product Feedback</option>
+                                <option value="collab">Collaboration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Send Message</button>
+                    </form>
+                    <div id="formSuccess" class="form-success" style="display: none;">
+                        <p>Thank you for your message! We'll get back to you soon.</p>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h2>Other Ways to Connect</h2>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h3>Email Us</h3>
+                            <p><a href="mailto:hello@oasisjournals.com">hello@oasisjournals.com</a></p>
+                            <p>Typically respond within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-details">
+                            <h3>Live Chat</h3>
+                            <p>Available Monday-Friday, 9am-5pm IST</p>
+                            <button class="btn secondary chat-button">Start Chat</button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h3>Social Media</h3>
+                            <div class="social-links">
+                                <a href="#" class="social-link">Instagram</a>
+                                <a href="#" class="social-link">Pinterest</a>
+                                <a href="#" class="social-link">Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">🏢</div>
+                        <div class="contact-details">
+                            <h3>Our Office</h3>
+                            <p>Oasis Journals LLC<br>
+                            Vaishali Nagar,<br>
+                            Ajmer, Rajasthan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How long does shipping take?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We typically process and ship orders within 1-2 business days. Domestic shipping takes 3-5 business days, while international shipping varies by destination (usually 7-14 business days). You'll receive tracking information as soon as your order ships.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What's your return policy?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We accept returns within 30 days of purchase for unused journals in their original condition. Please contact us at returns@oasisjournals.com to initiate a return. Customer is responsible for return shipping costs unless the item arrived damaged or incorrect.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do you offer wholesale pricing?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! We offer wholesale pricing for retailers purchasing 10+ journals. Please email wholesale@oasisjournals.com with your business details and we'll send you our wholesale catalog and pricing.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Are your journals eco-friendly?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use FSC-certified paper, soy-based inks, and recycled materials whenever possible. Our packaging is 100% recyclable and we're constantly working to reduce our environmental impact.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Join the Oasis Community</h2>
+            <p>Get free prompts and mindful tips!</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <form class="footer-newsletter">
+                        <input type="email" placeholder="Email address">
+                        <button type="submit">→</button>
+                    </form>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/oasis_journals" target="_blank">
+                            <i class="fab fa-instagram"></i> Instagram
+                        <a href="#">Pinterest</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Oasis Journals. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    const answer = question.nextElementSibling;
+                    const toggle = question.querySelector('.faq-toggle');
+                    
+                    // Toggle current item
+                    faqItem.classList.toggle('active');
+                    
+                    // Update toggle symbol
+                    if (faqItem.classList.contains('active')) {
+                        toggle.textContent = '−';
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        toggle.textContent = '+';
+                        answer.style.maxHeight = null;
+                    }
+                    
+                    // Close other open items
+                    faqQuestions.forEach(q => {
+                        if (q !== question) {
+                            const otherItem = q.parentElement;
+                            const otherAnswer = q.nextElementSibling;
+                            const otherToggle = q.querySelector('.faq-toggle');
+                            
+                            otherItem.classList.remove('active');
+                            otherToggle.textContent = '+';
+                            otherAnswer.style.maxHeight = null;
+                        }
+                    });
+                });
+            });
+
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formSuccess = document.getElementById('formSuccess');
+                    
+                    // Here you would typically send the form data to a server
+                    // For demo purposes, we'll just show the success message
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Hide form and show success message
+                    contactForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                });
+            }
+
+            // Live Chat Button
+            const chatButton = document.querySelector('.chat-button');
+            if (chatButton) {
+                chatButton.addEventListener('click', () => {
+                    alert("Our live chat is currently offline. Please email us at hello@oasisjournals.com and we'll respond within 24 hours.");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
